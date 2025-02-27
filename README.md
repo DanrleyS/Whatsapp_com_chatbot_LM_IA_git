@@ -69,6 +69,11 @@ json:
   "resposta": "Mensagem classificada como trabalho. Nenhuma consulta externa necessária."
 }
 
+📤 Outras categorias:
+Sugestões de Locais
+Perguntas Gerais
+Outros
+
 🔹 2. Treinar o Modelo de Machine Learning
 POST /train_model
 
@@ -90,23 +95,33 @@ json
 {
   "status": "Modelo treinado com sucesso!"
 }
-🔹 3. Buscar Locais no Google Maps
-POST /buscar_locais
 
-📌 Descrição: Retorna sugestões de locais com base na mensagem do usuário.
+🔹 3. Processar conversas
+POST /processar_conversa
+
+📌 Descrição: Processa uma conversa e retorna respostas com relação a ela.
 
 📥 Exemplo de Requisição:
 
 json>
 {
-  "mensagem": "Onde encontro um bom restaurante por aqui?"
+    "conversa": [
+        {"usuario": "João", "mensagem": "Oi, pessoal! Vamos marcar a reunião?", "hora_envio": "2025-02-18T09:00:00"},
+        {"usuario": "Maria", "mensagem": "Bom dia! Tudo bem. Que tal às 14h?", "hora_envio": "2025-02-18T09:01:00"},
+        {"usuario": "Carlos", "mensagem": "14h está ótimo para mim.", "hora_envio": "2025-02-18T09:02:30"},
+        {"usuario": "Ana", "mensagem": "Por mim também.", "hora_envio": "2025-02-18T09:03:15"},
+        {"usuario": "João", "mensagem": "Perfeito! Então, reunião marcada para às 14h.", "hora_envio": "2025-02-18T09:04:00"},
+        {"usuario": "Carlos", "mensagem": "Vocês viram o último jogo de xadrez do Magnus Carlsen?", "hora_envio": "2025-02-18T10:00:00"},
+        {"usuario": "João", "mensagem": "Sim! Que partida incrível! Ele jogou muito bem.", "hora_envio": "2025-02-18T10:01:45"}
+    ],
+    "pergunta": "Que horas será a reunião?"
 }
+
 📤 Exemplo de Resposta:
 
 json:
 {
-  "categoria": "sugestoes_locais",
-  "resposta": ["Restaurante A - 4.5⭐", "Restaurante B - 4.2⭐"]
+  "resposta": "A Reunião será as 14 horas, conforme sugerido por Maria"
 }
 🏗️ Estrutura do Projeto
 
@@ -117,6 +132,7 @@ whatsapp_AI/
 │── main.py         # Arquivo principal da API
 │── requirements.txt # Dependências do projeto
 │── .env            # Configurações de API Keys
+
 📝 Notas Finais
 O modelo de Machine Learning é treinado com um conjunto de mensagens previamente classificadas.
 A API pode ser expandida para suportar novas funcionalidades, como integração com outros serviços.
